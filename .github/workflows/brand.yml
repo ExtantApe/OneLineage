@@ -1,0 +1,21 @@
+name: Brand copy
+
+# Fails if brand/oneorigin/ differs from brand/oneorigin.lock; warns if OnePhylogeny's source has moved ahead.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/oneorigin.mjs check
